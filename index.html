@@ -67,16 +67,25 @@ h3{font-size:23px;margin:0 0 8px}
 .warn{font-size:18px;padding:12px 18px;margin-top:12px}
 .lg{font-size:16px;padding:4px 14px 4px 10px}.flag{width:26px;height:18px}
 .chip{font-size:15px;padding:4px 12px}
-.kpi .l{font-size:16px}.kpi .n{font-size:58px;margin:4px 0}.kpi .d{font-size:15px}
+
 #tech,#use{flex:1;display:flex;flex-direction:column;justify-content:space-between}
 .row{grid-template-columns:260px 1fr 56px;font-size:18px;padding:10px 0}.b{height:13px}.vals{font-size:14px}.vals span{height:13px;line-height:13px}
 .big{display:flex;flex-direction:column}.big>div{flex:1;display:flex;flex-direction:column;justify-content:space-between}
 .big .row{grid-template-columns:380px 1fr 64px;font-size:23px;padding:14px 0}.big .b{height:17px}.big .vals{font-size:15px}.big .vals span{height:17px;line-height:17px}
-.s1{justify-content:center}.s1 h1{font-size:68px}.s1 .sub{font-size:24px}.s1 .card>ul.s{font-size:22px}
+.s1{justify-content:center}.s1 h1{font-size:60px}.s1 .sub{font-size:21px}.s1 .card>ul.s{font-size:22px}
 #sizes,#trend{flex:1;display:flex;align-items:center}
 .grid.flex1>*{min-height:0}
 .row{padding:6px 0}.b{height:11px}.vals span{height:11px;line-height:11px}
 .big .row{padding:8px 0}.big .b{height:13px}.big .vals span{height:13px;line-height:13px}
+.st.no{background:rgba(255,77,109,.16);color:#ff8aa0}.card h3 .st{font-size:12px;margin-left:8px;vertical-align:3px}
+.share{display:flex;height:40px;border-radius:10px;overflow:hidden;box-shadow:0 0 0 1px var(--line)}.share div{display:flex;align-items:center;justify-content:center;font:600 14px ui-monospace,Menlo,monospace;color:#06101c}
+.mut{color:var(--mut)}.cr span{display:flex;align-items:center;gap:8px;white-space:nowrap}
+.cr{display:grid;grid-template-columns:140px 1fr 70px;gap:12px;align-items:center;font-size:19px}.cr .bb{height:20px;border-radius:6px;transform-origin:left;box-shadow:0 0 14px -2px var(--c);background:var(--c)}.slide.on .cr .bb{animation:growX .9s cubic-bezier(.2,.8,.2,1) both}.cr b{font-family:ui-monospace,Menlo,monospace;text-align:right}
+.cf{background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:17px}.cf b{color:#fff}
+/* slide 2 fit + smaller tiles */
+#trend,#sizes{flex:1;min-height:0;display:block}#trend svg,#sizes svg{width:100%;height:100%}
+.kpi.sm{padding:8px 14px}.kpi.sm .n{font-size:34px;margin:0}.kpi.sm .l{font-size:14px}.kpi.sm .d{font-size:13px}.kpi.sm:after{display:none}
+.warn.ins{background:rgba(53,224,255,.08);border-color:rgba(53,224,255,.35);color:#cdf6ff}.warn.ins b{color:var(--cy)}
 </style></head><body>
 <div id="stage"><canvas id="bg" width="1280" height="720"></canvas>
 
@@ -86,11 +95,12 @@ h3{font-size:23px;margin:0 0 8px}
 <div class="lgs" id="lg0" style="margin:6px 0 4px"></div>
 <div class="grid two" style="margin-top:22px;grid-auto-rows:1fr">
 <div class="card find b2"><h3>Questions</h3><ul class="s"><li>How far is Poland behind the innovation leaders?</li><li>Does enterprise size explain it?</li><li>What could explain the gap?</li></ul></div>
-<div class="card find b2"><h3>Data</h3><ul class="s"><li>Eurostat API, <code>isoc_eb_ai</code> (open, no login)</li><li>PL, DK, FI + EU27 average</li><li>Years 2021, 2023–2025 · sizes 10–49 / 50–249 / 250+</li></ul></div></div>
-<p class="sub" style="margin-top:auto;margin-bottom:0">Navigate: ← → / Space · F = fullscreen · hover charts, click legend items</p></section>
+<div class="card find b2"><h3>Data</h3><ul class="s"><li>Eurostat API, <code>isoc_eb_ai</code> (open, no login)</li><li>GUS "ICT in enterprises 2025" tables, used to verify hypotheses</li><li>PL, DK, FI + EU27 average</li><li>Years 2021, 2023–2025 · sizes 10–49 / 50–249 / 250+</li></ul></div></div>
+<div class="warn ins" style="margin-top:14px;font-size:17px"><b>Why Eurostat for Poland?</b> The Polish figures in Eurostat come from GUS: GUS runs the national ICT-in-enterprises survey and passes it to Eurostat, which harmonises it so countries can be compared. We use Eurostat for the comparison and GUS tables for detail and verification.</div>
+<p class="sub" style="margin:14px 0 0;font-size:14px">Navigate: ← → / Space · F = fullscreen · hover charts, click legend items</p></section>
 
 <section class="slide"><div class="tag">1 · Headline &amp; trend</div><h2>Poland is five times behind Denmark, and the gap is widening</h2><p class="sub">% of enterprises (10+ employees) using at least one AI technology</p>
-<div class="grid four" id="kpis"></div>
+<div class="grid four" id="kpis" style="gap:12px"></div>
 <div class="card flex1" id="trendCard" style="margin-top:12px;padding-bottom:4px"><div class="lgs" id="lg1" style="margin:0"></div><div id="trend"></div></div>
 <div class="warn"><b>Read with care:</b> AI definition changed after 2021 and there is no 2022; the DK/FI "fall" in 2023 is a methodological break. Trust 2023→2025.</div></section>
 
@@ -100,30 +110,45 @@ h3{font-size:23px;margin:0 0 8px}
 
 <section class="slide"><div class="tag">3 · Technologies &amp; use</div><h2>Leaders are driven by text and generative AI</h2><p class="sub">2025, enterprises with 10+ employees, % of all enterprises · hover rows for values</p>
 <div class="grid two flex1" style="align-content:start"><div class="card"><h3>AI technologies</h3><div id="tech"></div></div>
-<div class="card"><h3>Business functions</h3><div id="use"></div></div></div></section>
+<div class="card"><h3>Business functions</h3><div id="use"></div></div></div>
+<div class="warn ins"><b>Takeaway:</b> text-based and generative AI is the entry point everywhere: it is the most used technology in Poland (5.2%) and Denmark (30.8%), and second in Finland. Poland differs in scale, not in the type of AI.</div></section>
 
 <section class="slide"><div class="tag">4 · Barriers</div><h2>Polish non-users hardly name any barrier</h2><p class="sub">2025, % of enterprises <u>not</u> using AI that name the reason</p>
 <div class="card flex1 big" style="padding:2px 20px"><div id="barr"></div></div>
 <div class="warn"><b>Hypothesis:</b> not cost or law. Most Polish firms haven't considered AI yet (awareness / perceived need). The data can't prove it.</div></section>
 
-<section class="slide"><div class="tag">5 · Findings</div><h2>Key differences and possible explanations</h2><p class="sub">Differences come from the data; factors are hypotheses to verify with GUS and further Eurostat indicators</p>
-<div class="grid two flex1" style="align-content:start;grid-template-columns:1.05fr 1fr">
+<section class="slide"><div class="tag">5 · Findings</div><h2>Key differences and tested explanations</h2><p class="sub">Differences come from Eurostat; each explanation was tested with GUS and Eurostat data (next two slides)</p>
+<div class="grid two flex1" style="align-content:start;grid-template-columns:1fr 1.05fr">
 <div class="card find"><h3>Key differences</h3><ul class="s" id="diffs" style="font-size:19px"></ul></div>
-<div class="card find b2"><h3>Factors behind the gap <span class="pill">hypotheses</span></h3><ol class="s" style="font-size:19px">
-<li><b>Skills &amp; awareness:</b> DK/FI non-users cite missing expertise (20–23%); PL ones almost nothing.</li>
-<li><b>Firm-size structure:</b> biggest gap in small firms, which dominate PL. <small>Verify: GUS firm-size data.</small></li>
-<li><b>Digital foundations:</b> lower data/IT maturity (cloud, ERP). <small>Verify: Eurostat isoc_eb_*.</small></li>
-<li><b>Sector mix &amp; investment:</b> industry-heavy, lower R&amp;D. <small>Verify: GUS sector, R&amp;D.</small></li></ol></div></div></section>
+<div class="card find b2"><h3>Factors behind the gap</h3><ol class="s" id="hyp" style="font-size:19px"></ol></div></div></section>
 
-<section class="slide"><div class="tag">6 · Wrap-up</div><h2>Method, limits and next steps</h2><p class="sub">&nbsp;</p>
+<section class="slide"><div class="tag">6 · Verification with GUS · I</div><h2>Awareness and digital foundations explain the gap</h2><p class="sub">2025, enterprises with 10+ employees · hover rows for values</p>
+<div class="grid two flex1" style="align-content:start;grid-template-columns:.8fr 1.2fr">
+<div class="card"><h3>H1 · Non-users that ever considered AI <span class="st ok">Supported</span></h3><div id="consid" style="flex:1;display:flex;flex-direction:column;justify-content:space-around"></div><small id="considNote" style="font-size:14px"></small></div>
+<div class="card"><h3>H3 · Digital foundations <span class="st ok">Supported</span></h3><div id="dig"></div></div></div>
+<div class="warn" id="xcheck"></div></section>
+
+<section class="slide"><div class="tag">7 · Verification with GUS · II</div><h2>Firm size and sector mix are not the cause</h2><p class="sub">Decomposition: how much of the gap comes from a different <i>mix</i> of firms, and how much from lower adoption <i>within</i> each segment</p>
 <div class="grid two flex1" style="align-content:start">
-<div class="card find b2"><h3>Method &amp; limits</h3><ul class="s"><li>Eurostat <code>isoc_eb_ai</code>, share of enterprises, NACE C10–S95 excl. K; barriers as share of non-users</li><li>Self-reported survey, 4 time points, no sector or regional split</li><li>2021 uses an older definition, so the trend is read from 2023</li><li>Correlation ≠ causation: factors are hypotheses</li></ul></div>
-<div class="card find"><h3>Next steps</h3><ul class="s"><li>Add GUS "ICT in enterprises" tables to test the factor hypotheses (firm-size structure, sector mix)</li><li>Add Eurostat digital-maturity indicators (cloud, ERP, e-commerce)</li><li>Extend with sector breakdown to see where the gap is largest</li></ul></div></div></section>
+<div class="card"><h3>H2 · Firm-size structure <span class="st no">Not supported</span></h3>
+<div class="share" id="share"></div><p class="mut" style="font-size:15px;margin:8px 0 0">Poland's firms (GUS 2025, 10+ employees) by size</p>
+<div id="sizeCf" style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:12px"></div></div>
+<div class="card"><h3>H4 · Sector mix <span class="st pt">Minor effect</span></h3><div id="sec"></div><div id="secCf" style="font-size:16px;margin-top:6px"></div></div></div></section>
+
+<section class="slide"><div class="tag">8 · Wrap-up</div><h2>What it means, limits and next steps</h2><p class="sub">Implications are our interpretation of the results, not proven causal effects</p>
+<div class="grid flex1" style="grid-template-columns:1.15fr 1fr 1fr;align-content:start">
+<div class="card find"><h3>Implications</h3><ul class="s" style="font-size:18px">
+<li><b>Awareness first:</b> most Polish non-users never considered AI, so pilots and demos matter more than subsidies.</li>
+<li><b>Build the base:</b> BI, ERP and advanced cloud lag, and AI sits on top of them.</li>
+<li><b>Target small and medium firms:</b> that is where the ratio to DK is highest (6.5× and 3.9×).</li>
+<li><b>Start with generative text AI:</b> the common entry point in all three countries.</li></ul></div>
+<div class="card find b2"><h3>Method &amp; limits</h3><ul class="s" style="font-size:17px"><li>Eurostat <code>isoc_eb_ai</code> and related sets; GUS 2025 tables</li><li>Decomposition applies Polish firm counts to Danish rates: an approximation</li><li>GUS and Eurostat totals differ slightly</li><li>Self-reported survey; correlation ≠ causation</li></ul></div>
+<div class="card find b2"><h3>Next steps</h3><ul class="s" style="font-size:17px"><li>Why is awareness low? Add GUS data on training, ICT specialists, R&amp;D</li><li>Regional and ownership breakdown from GUS</li><li>Repeat decomposition for Finland</li></ul></div></div></section>
 </div>
 <div id="tip"></div>
 <div id="nav"><button id="pv">←</button><div id="dots"></div><span id="ct"></span><button id="nx">→</button><button id="fs">⛶</button></div>
 <script>
-const D={"years": ["2021", "2023", "2024", "2025"], "geos": ["PL", "DK", "FI", "EU27_2020"], "any": {"GE10": {"PL": [2.86, 3.67, 5.9, 8.36], "DK": [23.89, 15.17, 27.58, 42.03], "FI": [15.79, 15.1, 24.37, 37.82], "EU27_2020": [7.65, 8.06, 13.48, 19.95]}, "10-49": {"PL": [1.88, 2.25, 3.93, 5.79], "DK": [19.74, 12.37, 23.52, 37.45], "FI": [12.37, 11.48, 20.02, 33.51], "EU27_2020": [6.12, 6.41, 11.21, 17.0]}, "50-249": {"PL": [4.96, 6.49, 10.41, 14.77], "DK": [37.25, 22.56, 40.92, 58.27], "FI": [26.66, 26.4, 37.67, 51.35], "EU27_2020": [12.55, 13.07, 20.97, 30.36]}, "GE250": {"PL": [17.46, 24.38, 32.95, 45.81], "DK": [66.22, 51.43, 63.39, 74.52], "FI": [51.17, 53.33, 70.4, 79.4], "EU27_2020": [28.41, 30.48, 41.17, 55.03]}}, "tech": {"E_AI_TTM": {"PL": 2.1, "DK": 29.1, "FI": 28.49, "EU27_2020": 11.75}, "E_AI_TSR": {"PL": 1.59, "DK": 15.17, "FI": 14.8, "EU27_2020": 7.22}, "E_AI_TNLG": {"PL": 5.23, "DK": 30.76, "FI": 20.12, "EU27_2020": 8.76}, "E_AI_TIR": {"PL": 1.84, "DK": 7.28, "FI": 7.7, "EU27_2020": 3.78}, "E_AI_TML": {"PL": 1.83, "DK": 12.75, "FI": 12.85, "EU27_2020": 5.1}, "E_AI_TPA": {"PL": 2.6, "DK": 15.19, "FI": 15.03, "EU27_2020": 5.35}, "E_AI_TAR": {"PL": 0.7, "DK": 4.38, "FI": 2.73, "EU27_2020": 1.39}}, "use": {"E_AI_PMS": {"PL": 4.93, "DK": 11.37, "FI": 15.81, "EU27_2020": 6.92}, "E_AI_PPP": {"PL": 2.51, "DK": 6.14, "FI": 6.87, "EU27_2020": 4.14}, "E_AI_PLOG": {"PL": 0.84, "DK": 3.64, "FI": 2.67, "EU27_2020": 1.21}, "E_AI_PITS": {"PL": 2.2, "DK": 9.42, "FI": 7.85, "EU27_2020": 3.94}}, "barr": {"E_AI_BLE": {"PL": 2.71, "DK": 23.01, "FI": 20.53, "EU27_2020": 9.94}, "E_AI_BCDP": {"PL": 2.14, "DK": 12.76, "FI": 14.44, "EU27_2020": 7.45}, "E_AI_BLEG": {"PL": 2.26, "DK": 13.37, "FI": 13.3, "EU27_2020": 7.58}, "E_AI_BDDT": {"PL": 1.45, "DK": 10.9, "FI": 13.61, "EU27_2020": 6.15}, "E_AI_BINC": {"PL": 1.77, "DK": 8.79, "FI": 14.66, "EU27_2020": 5.88}, "E_AI_BCST": {"PL": 2.4, "DK": 5.04, "FI": 8.18, "EU27_2020": 5.42}}};
+const D={"years": ["2021", "2023", "2024", "2025"], "geos": ["PL", "DK", "FI", "EU27_2020"], "any": {"GE10": {"PL": [2.86, 3.67, 5.9, 8.36], "DK": [23.89, 15.17, 27.58, 42.03], "FI": [15.79, 15.1, 24.37, 37.82], "EU27_2020": [7.65, 8.06, 13.48, 19.95]}, "10-49": {"PL": [1.88, 2.25, 3.93, 5.79], "DK": [19.74, 12.37, 23.52, 37.45], "FI": [12.37, 11.48, 20.02, 33.51], "EU27_2020": [6.12, 6.41, 11.21, 17.0]}, "50-249": {"PL": [4.96, 6.49, 10.41, 14.77], "DK": [37.25, 22.56, 40.92, 58.27], "FI": [26.66, 26.4, 37.67, 51.35], "EU27_2020": [12.55, 13.07, 20.97, 30.36]}, "GE250": {"PL": [17.46, 24.38, 32.95, 45.81], "DK": [66.22, 51.43, 63.39, 74.52], "FI": [51.17, 53.33, 70.4, 79.4], "EU27_2020": [28.41, 30.48, 41.17, 55.03]}}, "tech": {"E_AI_TTM": {"PL": 2.1, "DK": 29.1, "FI": 28.49, "EU27_2020": 11.75}, "E_AI_TSR": {"PL": 1.59, "DK": 15.17, "FI": 14.8, "EU27_2020": 7.22}, "E_AI_TNLG": {"PL": 5.23, "DK": 30.76, "FI": 20.12, "EU27_2020": 8.76}, "E_AI_TIR": {"PL": 1.84, "DK": 7.28, "FI": 7.7, "EU27_2020": 3.78}, "E_AI_TML": {"PL": 1.83, "DK": 12.75, "FI": 12.85, "EU27_2020": 5.1}, "E_AI_TPA": {"PL": 2.6, "DK": 15.19, "FI": 15.03, "EU27_2020": 5.35}, "E_AI_TAR": {"PL": 0.7, "DK": 4.38, "FI": 2.73, "EU27_2020": 1.39}}, "use": {"E_AI_PMS": {"PL": 4.93, "DK": 11.37, "FI": 15.81, "EU27_2020": 6.92}, "E_AI_PPP": {"PL": 2.51, "DK": 6.14, "FI": 6.87, "EU27_2020": 4.14}, "E_AI_PLOG": {"PL": 0.84, "DK": 3.64, "FI": 2.67, "EU27_2020": 1.21}, "E_AI_PITS": {"PL": 2.2, "DK": 9.42, "FI": 7.85, "EU27_2020": 3.94}}, "barr": {"E_AI_BLE": {"PL": 2.71, "DK": 23.01, "FI": 20.53, "EU27_2020": 9.94}, "E_AI_BCDP": {"PL": 2.14, "DK": 12.76, "FI": 14.44, "EU27_2020": 7.45}, "E_AI_BLEG": {"PL": 2.26, "DK": 13.37, "FI": 13.3, "EU27_2020": 7.58}, "E_AI_BDDT": {"PL": 1.45, "DK": 10.9, "FI": 13.61, "EU27_2020": 6.15}, "E_AI_BINC": {"PL": 1.77, "DK": 8.79, "FI": 14.66, "EU27_2020": 5.88}, "E_AI_BCST": {"PL": 2.4, "DK": 5.04, "FI": 8.18, "EU27_2020": 5.42}}};const X={"gus": {"n": {"total": 108612.0, "10-49": 88864.0, "50-249": 15939.0, "GE250": 3809.0}, "ai_gus": {"total": 8.7, "10-49": 6.1, "50-249": 15.6, "GE250": 42.0}, "tech_gus": {"text_mining": 2.1, "speech": 1.6, "lang_gen": 5.3, "image_gen": 2.9, "image_rec": 1.9, "ml": 2.0, "rpa": 2.9, "robots": 0.7}, "nonuse_gus": {"considered_pc_all": 3.9, "cost": 2.1, "expertise": 2.4, "incompat": 1.6, "data": 1.3, "privacy": 2.1, "legal": 2.1, "ethics": 1.0, "notuseful": 1.3}, "digital_gus": {"cloud": 55.3, "erp": 40.5, "crm": 25.1, "bi": 13.0, "analytics": 24.1}, "sector_gus": {"C": {"n": 29236.0, "ai": 7.8}, "F": {"n": 15750.0, "ai": 2.6}, "G": {"n": 26633.0, "ai": 9.0}, "H": {"n": 11591.0, "ai": 3.4}, "I": {"n": 5243.0, "ai": 5.4}, "J": {"n": 3437.0, "ai": 37.8}, "L": {"n": 2453.0, "ai": 5.1}, "M": {"n": 6563.0, "ai": 23.2}, "N": {"n": 5011.0, "ai": 11.2}}, "sector": [{"code": "C", "name": "Manufacturing", "n": 29236.0, "PL": 7.7, "DK": 38.55, "FI": null, "EU27_2020": 17.27}, {"code": "F", "name": "Construction", "n": 15750.0, "PL": 2.35, "DK": 23.93, "FI": 24.01, "EU27_2020": 10.79}, {"code": "G", "name": "Trade", "n": 26633.0, "PL": 8.88, "DK": 44.8, "FI": 34.26, "EU27_2020": 18.62}, {"code": "H", "name": "Transport", "n": 11591.0, "PL": 2.97, "DK": 26.9, "FI": 12.93, "EU27_2020": 11.15}, {"code": "I", "name": "Accommodation & food", "n": 5243.0, "PL": 5.57, "DK": 25.2, "FI": 23.53, "EU27_2020": 11.98}, {"code": "J", "name": "ICT sector", "n": 3437.0, "PL": 38.09, "DK": 79.08, "FI": 79.79, "EU27_2020": 62.52}, {"code": "L_M", "name": "Real estate, professional, scientific", "n": 9016.0, "PL": 16.93, "DK": 62.58, "FI": 71.88, "EU27_2020": 38.16}, {"code": "N", "name": "Admin & support", "n": 5011.0, "PL": 10.47, "DK": 33.06, "FI": 38.65, "EU27_2020": 19.86}], "sector_cov": 0.9751869038411962, "sector_cf": {"PL_actual": 8.480988887525138, "PL_weights_DK_rates": 39.112777929888495}}, "es": {"considered": {"PL": 4.33, "DK": 28.04, "FI": 31.31, "EU27_2020": 14.21}, "cloud": {"PL": 54.71, "DK": 68.88, "FI": 79.21, "EU27_2020": 52.74}, "cloud_soph": {"PL": 16.12, "DK": 39.78, "FI": 36.95, "EU27_2020": 15.88}, "erp": {"PL": 39.1, "DK": 66.25, "FI": 58.11, "EU27_2020": 46.45}, "crm": {"PL": 24.32, "DK": 42.51, "FI": 55.79, "EU27_2020": 28.51}, "bi": {"PL": 11.72, "DK": 41.7, "FI": 43.42, "EU27_2020": 16.28}}, "size": {"w": {"10-49": 0.818178470150628, "50-249": 0.14675174013921113, "GE250": 0.03506978971016094}, "cf_DK": 41.80540833425405, "cf_FI": 37.73740369388281, "pl_w_pl_rates": 8.511323610650757, "dk_total": 42.03, "pl_total": 8.36, "gap": 33.67, "composition": 0.22459166574595457, "rate": 33.29408472360329}, "sector": {"cov": 0.9751869038411962, "pl_actual": 8.480988887525138, "cf_DK": 39.112777929888495, "dk_total": 42.03, "composition": 2.9172220701115066, "rate": 30.63178904236336}, "sectorList": [{"code": "C", "name": "Manufacturing", "n": 29236.0, "PL": 7.7, "DK": 38.55, "FI": null, "EU27_2020": 17.27}, {"code": "F", "name": "Construction", "n": 15750.0, "PL": 2.35, "DK": 23.93, "FI": 24.01, "EU27_2020": 10.79}, {"code": "G", "name": "Trade", "n": 26633.0, "PL": 8.88, "DK": 44.8, "FI": 34.26, "EU27_2020": 18.62}, {"code": "H", "name": "Transport", "n": 11591.0, "PL": 2.97, "DK": 26.9, "FI": 12.93, "EU27_2020": 11.15}, {"code": "I", "name": "Accommodation & food", "n": 5243.0, "PL": 5.57, "DK": 25.2, "FI": 23.53, "EU27_2020": 11.98}, {"code": "J", "name": "ICT sector", "n": 3437.0, "PL": 38.09, "DK": 79.08, "FI": 79.79, "EU27_2020": 62.52}, {"code": "L_M", "name": "Real estate, professional, scientific", "n": 9016.0, "PL": 16.93, "DK": 62.58, "FI": 71.88, "EU27_2020": 38.16}, {"code": "N", "name": "Admin & support", "n": 5011.0, "PL": 10.47, "DK": 33.06, "FI": 38.65, "EU27_2020": 19.86}]};
 const C={PL:'#ff4d6d',DK:'#ffb020',FI:'#4da3ff',EU27_2020:'#a78bfa'},N={PL:'Poland',DK:'Denmark',FI:'Finland',EU27_2020:'EU27'};
 const G=D.geos,Y=D.years;const f=x=>x==null?'–':x.toFixed(1)+'%';
 // flags (inline SVG, work on every OS)
@@ -146,7 +171,7 @@ legend('lg0');legend('lg1','trendCard');legend('lg2','sizeCard');
 const A=D.any.GE10,last=Y.length-1;
 document.getElementById('kpis').innerHTML=G.map(g=>{const v=A[g][last];let d='';
  if(g=='PL')d=`2023→2025: ${f(A.PL[1])} → ${f(v)}`;else if(g!='EU27_2020')d=`PL is <b style="color:#fff">${(v/A.PL[last]).toFixed(1)}×</b> lower (−${(v-A.PL[last]).toFixed(1)} pp)`;else d=`PL is ${(v-A.PL[last]).toFixed(1)} pp below`;
- return `<div class="card kpi" style="--c:${C[g]}"><div class="l">${flag(g)}${N[g]} · 2025</div><div class="n"><span data-count="${v}">${v.toFixed(1)}</span>%</div><div class="d">${d}</div></div>`}).join('');
+ return `<div class="card kpi sm" style="--c:${C[g]}"><div class="l">${flag(g)}${N[g]} · 2025</div><div class="n"><span data-count="${v}">${v.toFixed(1)}</span>%</div><div class="d">${d}</div></div>`}).join('');
 function counters(sl){sl.querySelectorAll('[data-count]').forEach(el=>{const to=+el.dataset.count,t0=performance.now();(function s(t){const p=Math.min(1,(t-t0)/1000),e=1-Math.pow(1-p,3);el.textContent=(to*e).toFixed(1);if(p<1)requestAnimationFrame(s)})(t0)})}
 // trend
 (function(){const W=1150,H=330,m={l:56,r:170,t:12,b:34},w=W-m.l-m.r,h=H-m.t-m.b;
@@ -174,8 +199,8 @@ document.querySelectorAll('#yrs .chip').forEach(b=>b.onclick=()=>{document.query
 sizes(last);
 // horizontal bars
 const NAMES={E_AI_TTM:'Text mining',E_AI_TSR:'Speech recognition',E_AI_TNLG:'Language generation (GenAI)',E_AI_TIR:'Image recognition',E_AI_TML:'Machine learning',E_AI_TPA:'Workflow automation / RPA',E_AI_TAR:'Autonomous robots',E_AI_PMS:'Marketing & sales',E_AI_PPP:'Production processes',E_AI_PLOG:'Logistics',E_AI_PITS:'ICT security',E_AI_BLE:'Lack of expertise',E_AI_BCDP:'Data protection / privacy',E_AI_BLEG:'Unclear legal consequences',E_AI_BDDT:'Data availability / quality',E_AI_BINC:'Incompatible systems',E_AI_BCST:'Costs too high'};
-function hb(id,obj){const gs=['PL','DK','FI'],max=Math.max(...Object.values(obj).flatMap(v=>gs.map(g=>v[g])));
- document.getElementById(id).innerHTML=Object.keys(obj).map(k=>`<div class="row" data-tip="${tipI(tipRows(NAMES[k],gs.map(g=>[g,obj[k][g]])))}"><div>${NAMES[k]}</div><div class="bars">${gs.map(g=>`<div class="b" style="width:${obj[k][g]/max*100}%;background:${C[g]};--c:${C[g]}"></div>`).join('')}</div><div class="vals">${gs.map(g=>`<span style="color:${C[g]}">${obj[k][g].toFixed(1)}</span>`).join('')}</div></div>`).join('')+`<div class="lgs" style="margin:8px 0 0">${gs.map(g=>`<span class="lg static">${flag(g)}${N[g]}<i class="dot" style="background:${C[g]}"></i></span>`).join('')}</div>`}
+function hb(id,obj,gs=['PL','DK','FI'],names=NAMES,fmt=x=>x.toFixed(1)){const max=Math.max(...Object.values(obj).flatMap(v=>gs.map(g=>v[g]||0)));
+ document.getElementById(id).innerHTML=Object.keys(obj).map(k=>`<div class="row" data-tip="${tipI(tipRows(names[k],gs.map(g=>[g,obj[k][g]])))}"><div>${names[k]}</div><div class="bars">${gs.map(g=>`<div class="b" style="width:${(obj[k][g]||0)/max*100}%;background:${C[g]};--c:${C[g]}"></div>`).join('')}</div><div class="vals">${gs.map(g=>`<span style="color:${C[g]}">${obj[k][g]==null?'–':fmt(obj[k][g])}</span>`).join('')}</div></div>`).join('')+`<div class="lgs" style="margin:8px 0 0">${gs.map(g=>`<span class="lg static">${flag(g)}${N[g]}<i class="dot" style="background:${C[g]}"></i></span>`).join('')}</div>`}
 hb('tech',D.tech);hb('use',D.use);hb('barr',D.barr);
 (function(){const t=D.tech;
  const L=[`<b>Level:</b> ${f(A.DK[last])} of Danish and ${f(A.FI[last])} of Finnish firms use AI vs <b>${f(A.PL[last])}</b> in Poland (EU27 ${f(A.EU27_2020[last])}): ${(A.DK[last]/A.PL[last]).toFixed(1)}× and ${(A.FI[last]/A.PL[last]).toFixed(1)}×.`,
@@ -184,6 +209,30 @@ hb('tech',D.tech);hb('use',D.use);hb('barr',D.barr);
  `<b>Size:</b> in Poland large firms (${f(D.any.GE250.PL[last])}) are ${(D.any.GE250.PL[last]/D.any['10-49'].PL[last]).toFixed(0)}× ahead of small ones (${f(D.any['10-49'].PL[last])}); in Denmark only ${(D.any.GE250.DK[last]/D.any['10-49'].DK[last]).toFixed(1)}×.`,
  `<b>Barriers:</b> Danish/Finnish non-users cite expertise, privacy, law; Polish ones cite almost nothing: a sign of low awareness.`];
  document.getElementById('diffs').innerHTML=L.map(x=>`<li>${x}</li>`).join('')})();
+// GUS verification slides
+(function(){const E=X.es,Gs=X.gus;
+ const cr=(g,v,max)=>`<div class="cr" style="--c:${C[g]}" data-tip="${tipI(tipRows('Non-users that ever considered AI',[[g,v]]))}"><span>${flag(g)} ${N[g]}</span><div class="bb" style="width:${v/max*100}%"></div><b style="color:${C[g]}">${v.toFixed(1)}%</b></div>`;
+ document.getElementById('consid').innerHTML=['PL','DK','FI','EU27_2020'].map(g=>cr(g,E.considered[g],35)).join('');
+ document.getElementById('considNote').innerHTML=`% of enterprises <u>not</u> using AI that ever considered it. GUS: ${Gs.nonuse_gus.considered_pc_all}% of all Polish firms (same as Eurostat). ${(E.considered.DK/E.considered.PL).toFixed(0)}× more Danish non-users have considered AI.`;
+ const dn={cloud:'Paid cloud services (any)',cloud_soph:'Sophisticated cloud services',erp:'ERP software',crm:'CRM software',bi:'Business intelligence (BI)'};
+ const o={};['cloud','cloud_soph','erp','crm','bi'].forEach(k=>o[k]=E[k]);hb('dig',o,['PL','DK','FI'],dn,x=>x.toFixed(0));
+ document.getElementById('xcheck').innerHTML=`<b>GUS cross-check (Poland, 2025):</b> AI use ${Gs.ai_gus.total}% (Eurostat ${f(A.PL[last])}); small/medium/large ${Gs.ai_gus['10-49']} / ${Gs.ai_gus['50-249']} / ${Gs.ai_gus.GE250}% (Eurostat ${D.any['10-49'].PL[last].toFixed(1)} / ${D.any['50-249'].PL[last].toFixed(1)} / ${D.any.GE250.PL[last].toFixed(1)}%). ERP ${Gs.digital_gus.erp}%, CRM ${Gs.digital_gus.crm}%, BI ${Gs.digital_gus.bi}%, cloud ${Gs.digital_gus.cloud}% match Eurostat within ~1.5 pp. Conclusions don't change.`;
+ // size
+ const w=X.size.w,col={'10-49':'#7fd1ff','50-249':'#35e0ff','GE250':'#8b5cff'},nm={'10-49':'Small','50-249':'Medium','GE250':'Large'};
+ document.getElementById('share').innerHTML=Object.keys(w).map(k=>`<div style="width:${w[k]*100}%;background:${col[k]}" data-tip="${tipI('<b>'+nm[k]+'</b><div class=r>'+Gs.n[k].toLocaleString('en')+' enterprises ('+(w[k]*100).toFixed(1)+'%)</div>')}">${w[k]>.08?nm[k]+' '+(w[k]*100).toFixed(0)+'%':''}</div>`).join('');
+ const s=X.size;document.getElementById('sizeCf').innerHTML=`<div class="cf">Poland's mix + <b>Danish</b> rates by size → <b>${s.cf_DK.toFixed(1)}%</b> <small>(Denmark's actual: ${s.dk_total.toFixed(1)}%)</small></div>
+ <div class="cf">Gap ${s.gap.toFixed(1)} pp = <b>${s.composition.toFixed(1)} pp</b> mix + <b>${s.rate.toFixed(1)} pp</b> adoption within size classes</div>
+ <div class="cf" style="border-color:rgba(255,77,109,.4)"><b>${(s.composition/s.gap*100).toFixed(1)}%</b> of the gap is size structure, so the hypothesis is rejected: Polish firms lag at every size.</div>`;
+ // sector
+ const so={},sn={};X.sectorList.forEach(e=>{so[e.code]={PL:e.PL,DK:e.DK};sn[e.code]=e.name});hb('sec',so,['PL','DK'],sn,x=>x.toFixed(0));
+ const c=X.sector;document.getElementById('secCf').innerHTML=`<div class="cf">Polish sector mix (GUS, ${(c.cov*100).toFixed(0)}% of firms) + Danish rates → <b>${c.cf_DK.toFixed(1)}%</b> vs Denmark ${c.dk_total.toFixed(1)}%: mix explains <b>${c.composition.toFixed(1)} pp</b> (${(c.composition/(c.dk_total-c.pl_actual)*100).toFixed(0)}% of the gap). The rest is lower adoption in every sector.</div>`;
+ // hypotheses list
+ document.getElementById('hyp').innerHTML=[
+  ['ok','Supported','Skills &amp; awareness',`only ${E.considered.PL.toFixed(0)}% of Polish non-users ever considered AI (DK ${E.considered.DK.toFixed(0)}%, FI ${E.considered.FI.toFixed(0)}%)`],
+  ['no','Not supported','Firm-size structure',`size mix explains just ${X.size.composition.toFixed(1)} of ${X.size.gap.toFixed(1)} pp`],
+  ['ok','Supported','Digital foundations',`BI ${E.bi.PL.toFixed(0)}% vs ${E.bi.DK.toFixed(0)}–${E.bi.FI.toFixed(0)}%; sophisticated cloud ${E.cloud_soph.PL.toFixed(0)}% vs ${E.cloud_soph.FI.toFixed(0)}–${E.cloud_soph.DK.toFixed(0)}%`],
+  ['pt','Minor effect','Sector mix',`≈${X.sector.composition.toFixed(0)} pp; the gap exists in every sector`]].map(([c,l,h,x])=>`<li><b>${h}</b> <span class="st ${c}">${l}</span><br><small style="font-size:.85em;color:#b9c1d9">${x}</small></li>`).join('');
+})();
 // neural background
 (function(){const c=document.getElementById('bg'),x=c.getContext('2d'),P=Array.from({length:55},()=>({x:Math.random()*1280,y:Math.random()*720,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25}));
  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
